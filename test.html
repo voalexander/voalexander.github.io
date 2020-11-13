@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="style" href="style.css">
+    </head>
+    <body>
+        <script src="scripts.js"></script>
+        <div>
+            <div class="rows">
+                <label>Variables (comma separated)</label>
+                <input type="text" id="vars" value="a,b,c">
+            </div>
+            <div class="rows">
+                <label>Expressions (comma separated)</label>
+                <input type="text" id="expression" value="!( a || b || c ), (!a && !b && !c)">
+            </div>
+            <div class="rows">
+                <button id="getResult">Generate truth table</button>
+            </div>
+        </div>
+    </body>
+</html>
