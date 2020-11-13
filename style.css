@@ -1,3 +1,53 @@
-body {
-    background-color: lightblue;
-  }
+* {
+	color: #555;
+	background-color: rgb(134, 134, 134);
+	transition: all 0.2s ease-out;
+}
+input[type=text] {
+	padding: 5px 15px;
+    border: 1px solid #AAA;
+    fill: #FFF;
+	border-radius: 2px;
+	outline: none;
+}
+.rows {
+	padding-bottom: 5px;
+}
+.rows label {
+	width: 220px;
+	display: inline-block;
+}
+button {
+	border: 1px solid #AAA;
+	padding: 5px 15px;
+	border-radius: 4px;
+	outline: none;
+}
+button:hover {
+	background-color: #F0F0F0;
+}
+button:active {
+	background-color: #F9F9F9;
+}
+th,td {
+	border: solid #CCC;
+	border-width: 1px 0 0 1px;
+	padding: 2px 5px;
+}
+th {
+	background-color: #F0F0F0;
+}
+td.true {
+	color: green;
+}
+td.false {
+	color: red;
+}
+tr:hover td {
+	background-color: #F0F0F0;
+}
+table {
+	border: solid #CCC;
+	border-width: 0 1px 1px 0;
+	margin-top: 10px;
+}
