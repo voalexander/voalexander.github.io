@@ -1,6 +1,6 @@
 * {
 	color: #555;
-	background-color: rgb(134, 134, 134);
+	background-color: #FFF;
 	transition: all 0.2s ease-out;
 }
 input[type=text] {
@@ -8,7 +8,7 @@ input[type=text] {
     border: 1px solid #AAA;
     fill: #FFF;
 	border-radius: 2px;
-	outline: none;
+    outline: none;
 }
 .rows {
 	padding-bottom: 5px;
@@ -18,7 +18,7 @@ input[type=text] {
 	display: inline-block;
 }
 button {
-	border: 1px solid #AAA;
+	border: 1px solid rgb(156, 156, 156);
 	padding: 5px 15px;
 	border-radius: 4px;
 	outline: none;

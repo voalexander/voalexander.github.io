@@ -1,44 +1,47 @@
 var vars = ['a','b','c'] ,expressions = ['! ( a || b || c )', '(!a && !b && !c)'];
-	
-document.getElementById('getResult').addEventListener('click', ()=>{
-	var len = vars.length
-		,splitBy = Math.round(len/2)
-		,trueSet
-		,trues = []
-		,falses = []
-		,truthData = [];
+var getResult = document.getElementById('getResult')
+getResult.addEventListener('click', output);
+
+function output()
+{
+	var len = vars.length;
+	var splitBy = Math.round(len/2);
+	var trueSet;
+	var trueVals = [];
+	var falseVals = [];
+	var truthData = [];
 	
 	vars = document.getElementById('vars').value.split(',');
 	expressions = document.getElementById('expression').value.split(',');
 
 	
 	truthData.push(truth(vars, vars, true));
-	for(var i=1; i<=splitBy; i++) {
+	for(var i=1; i<=splitBy; i++) 
+	{
 		trueSet = reduceToCombinations(permut(vars, i));
-		
-		trueSet.forEach((truthSrc)=>{
-			trues = truth(vars, truthSrc);
-			truthData.push(trues);
-		});
-		
-		
+		trueSet.forEach((truthSrc)=>
+		{
+			trueVals = truth(vars, truthSrc);
+			truthData.push(trueVals);
+		}
+		);
 	}
 	truthData.push(truth(vars, vars));
 	
 	writeTruthTable(truthData);
-});
+}
 
 function truth(set, truths, reverse) {
 	var w = {};
 	
-	set.forEach(v=>w[v]=(truths.indexOf(v)>=0 ? true : false)^reverse);
+	set.forEach(i => w[i] = (truths.indexOf(i)>=0 ? true : false) ^ reverse);
 	
 	return w;
 }
 
 function reduceToCombinations(arr) {
-	var i=1
-		,lastEl;
+	var i=1;
+	var lastEl;
 
 	arr = arr.map(v=>{return v.split('').sort().join('')}).sort();
 	
@@ -58,10 +61,10 @@ function reduceToCombinations(arr) {
 }
 
 function writeTruthTable(truthData) {
-	var table = '<table cellpadding=0 cellspacing=0>'
-		,keys
-		,vals
-		,exprRes;
+	var table = '<table cellpadding=0 cellspacing=0>';
+	var keys;
+	var vals;
+	var exprRes;
 		
 	table += '<thead><tr>';
 	vars.forEach(v=>{
