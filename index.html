@@ -24,6 +24,7 @@
         <script>
             var vars = ['a','b','c'] ,expressions = ['! ( a || b || c )', '(!a && !b && !c)'];
             var getResult = document.getElementById('getResult')
+            var getXLS = document.getElementById('exportXLS')
             var wb = XLSX.utils.book_new();
             wb.Props = {
                 Title: "Truth Table",
@@ -33,7 +34,13 @@
             };
 
             getResult.addEventListener('click', output);
-            
+            getXLS.addEventListener('click', exportXLS);
+
+            function exportXLS()
+            {
+
+            }
+
 
             function output()
             {
@@ -97,12 +104,16 @@
                 return arr;
             }
 
-            function writeTruthTable(truthData) {
+            function writeTruthTable(truthData) 
+            {
                 var table = '<table cellpadding=0 cellspacing=0>';
                 var keys;
                 var vals;
                 var exprRes;
-                    
+                
+                wb.SheetNames.push("TruthTable");
+                var matrix = new Array(j.len).fill(0).map(() => new Array(9).fill(0));
+                document.write(matrix);
                 table += '<thead><tr>';
                 vars.forEach(j =>
                 {
@@ -111,15 +122,15 @@
                     table += '</th>';
                 });
 
+
                 expressions.forEach(j =>
                 {
                     table += '<th>';
                     table += j;
                     table += '</th>';
                 });
-
+    
                 table += '</tr></thead>';
-                
                 truthData.forEach((j)=> 
                 {
                     vals = [];
@@ -133,6 +144,7 @@
                         table += j[i];
                         table += '</td>';
                     };
+
                     for(var i = 0; i < keys.length; i++) 
                     {
                         eval(`var ${keys[i]} = ${vals[i]};`);
