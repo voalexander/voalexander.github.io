@@ -16,7 +16,7 @@ function output()
 
 	
 	truthData.push(truth(vars, vars, true));
-	for(var i=1; i<=splitBy; i++) 
+	for(var i = 1; i <= splitBy; i++) 
 	{
 		trueSet = reduceToCombinations(permut(vars, i));
 		trueSet.forEach((truthSrc)=>
@@ -69,6 +69,7 @@ function writeTruthTable(truthData) {
 	var keys;
 	var vals;
 	var exprRes;
+	//var wb = xlsx.utils.book_new();
 		
 	table += '<thead><tr>';
 	vars.forEach(j =>
@@ -92,7 +93,6 @@ function writeTruthTable(truthData) {
 		vals = [];
 		keys = [];
 		table += '<tr>';
-		console.log(j);
 		for(i in j)
 		{
 			vals.push(j[i]);

@@ -49,5 +49,6 @@ tr:hover td {
 table {
 	border: solid #CCC;
 	border-width: 0 1px 1px 0;
-	margin-top: 10px;
+    margin-top: 10px;
+    margin-bottom:  10px;
 }
