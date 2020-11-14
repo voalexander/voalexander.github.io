@@ -31,32 +31,36 @@ function output()
 	writeTruthTable(truthData);
 }
 
-function truth(set, truths, reverse) {
-	var w = {};
+function truth(set, truths, reverse) 
+{
+	var truthSet = {};
 	
-	set.forEach(i => w[i] = (truths.indexOf(i)>=0 ? true : false) ^ reverse);
+	set.forEach(i => truthSet[i] = (truths.indexOf(i) >= 0 ? true : false) ^ reverse);
 	
-	return w;
+	return truthSet;
 }
 
-function reduceToCombinations(arr) {
-	var i=1;
-	var lastEl;
+function reduceToCombinations(arr) 
+{
+	var i = 1;
+	var finalElement;
 
-	arr = arr.map(v=>{return v.split('').sort().join('')}).sort();
+	arr = arr.map(j => {return j.split('').sort().join('')}).sort();
 	
-	lastEl = arr[0];
-	while(i<arr.length) {
-		if(arr[i] == lastEl) {
+	finalElement = arr[0];
+	while(i<arr.length) 
+	{
+		if(arr[i] == finalElement) 
+		{
 			arr.splice(i,1);
-		} else {
-			lastEl = arr[i];
+		} 
+		else 
+		{
+			finalElement = arr[i];
 			i++;
 		}
 	}
-	
-	arr = arr.map(v=>{return v.split('')});
-	
+	arr = arr.map(j=>{return j.split('')});
 	return arr;
 }
 
@@ -67,34 +71,43 @@ function writeTruthTable(truthData) {
 	var exprRes;
 		
 	table += '<thead><tr>';
-	vars.forEach(v=>{
+	vars.forEach(j =>
+	{
 		table += '<th>';
-		table += v;
+		table += j;
 		table += '</th>';
 	});
-	expressions.forEach(v=>{
+
+	expressions.forEach(j =>
+	{
 		table += '<th>';
-		table += v;
+		table += j;
 		table += '</th>';
 	});
+
 	table += '</tr></thead>';
 	
-	truthData.forEach((v)=> {
+	truthData.forEach((j)=> 
+	{
 		vals = [];
 		keys = [];
 		table += '<tr>';
-		console.log(v);
-		for(i in v){
-			vals.push(v[i]);
+		console.log(j);
+		for(i in j)
+		{
+			vals.push(j[i]);
 			keys.push(i);
 			table += '<td>';
-			table += v[i];
+			table += j[i];
 			table += '</td>';
 		};
-		for(var i = 0; i<keys.length; i++) {
+		for(var i = 0; i < keys.length; i++) 
+		{
 			eval(`var ${keys[i]} = ${vals[i]};`);
 		}
-		expressions.forEach((expr)=>{
+
+		expressions.forEach((expr)=>
+		{
 			exprRes = eval(expr);
 			table += `<td class="${exprRes}">`;
 			table += exprRes ? 'T' : 'F';
@@ -105,25 +118,30 @@ function writeTruthTable(truthData) {
 	});
 	
 	table += '</table>';
-	
 	document.getElementById('result').innerHTML = table;
 }
 
 function permut(arr, c) {
-	var buf = []
-		,len
-		,arrSlice
-		,permArr
-		,proArr;
-	if(c<=1) {
+	var buf = [];
+	var len;
+	var arrSlice;
+	var permArr;
+	var proArr;
+
+	if(c <= 1) 
+	{
 		return arr;
-	} else {
+	} 
+	else 
+	{
 		len = arr.length;
-		for(var i=0;i<len;i++) {
+		for(var i=0;i<len;i++) 
+		{
 			arrSlice = arr.slice(0,i).concat(arr.slice(i+1));
 			permArr = permut(arrSlice,c-1);
 			proArr = [];
-			for(var y=0; y<permArr.length; y++) {
+			for(var y=0; y<permArr.length; y++) 
+			{
 				proArr.push([arr[i]].concat(permArr[y]).join(''));
 			}
 			buf.push(...proArr);
