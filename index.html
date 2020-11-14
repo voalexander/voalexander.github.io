@@ -7,11 +7,11 @@
         <div>
             <div class="rows">
                 <label>Variables (comma separated)</label>
-                <input type="text" id="vars" value="a,b,c">
+                <input type="text" id="vars" value="a,b">
             </div>
             <div class="rows">
                 <label>Expressions (comma separated)</label>
-                <input type="text" id="expression" value="!( a || b || c ), (!a && !b && !c)">
+                <input type="text" id="expression" value="a || b">
             </div>
             <div class="rows">
                 <button id="getResult">Generate truth table</button>
@@ -20,9 +20,12 @@
             <div class="rows">
                 <button id="exportXLS">Export as XLS (Excel) file</button>
             </div>
+            <div>
+                    Changelog: Add stuff here
+            </div>
         </div>
         <script>
-            var vars = ['a','b','c'] ,expressions = ['! ( a || b || c )', '(!a && !b && !c)'];
+            var vars = ['a','b'] ,expressions = ['! ( a || b || c )'];
             var getResult = document.getElementById('getResult')
             var getXLS = document.getElementById('exportXLS')
             var wb = XLSX.utils.book_new();
@@ -112,55 +115,73 @@
                 var exprRes;
                 
                 wb.SheetNames.push("TruthTable");
-                var matrix = new Array(j.len).fill(0).map(() => new Array(9).fill(0));
-                document.write(matrix);
+                var ttArr = [...Array(vars.length + expressions.length)].map(x=>Array(9).fill(0))       
+                var k = 0;
                 table += '<thead><tr>';
                 vars.forEach(j =>
                 {
                     table += '<th>';
                     table += j;
+                    ttArr[k][0] = j;
                     table += '</th>';
+                    k += 1;
                 });
-
 
                 expressions.forEach(j =>
                 {
                     table += '<th>';
                     table += j;
+                    ttArr[k][0] = j;
                     table += '</th>';
+                    k += 1;
                 });
-    
+
                 table += '</tr></thead>';
-                truthData.forEach((j)=> 
+
+                try
                 {
-                    vals = [];
-                    keys = [];
-                    table += '<tr>';
-                    for(i in j)
+                    truthData.forEach((j)=> 
                     {
-                        vals.push(j[i]);
-                        keys.push(i);
-                        table += '<td>';
-                        table += j[i];
-                        table += '</td>';
-                    };
+                        vals = [];
+                        keys = [];
+                        table += '<tr>';
+                        k = 0;
+                        l = 1;
+                        for(i in j)
+                        {
+                            vals.push(j[i]);
+                            keys.push(i);
+                            table += '<td>';
+                            table += j[i];
+                            ttArr[k][l] = String(j[i]);
+                            table += '</td>';
+                        };
 
-                    for(var i = 0; i < keys.length; i++) 
-                    {
-                        eval(`var ${keys[i]} = ${vals[i]};`);
-                    }
 
-                    expressions.forEach((expr)=>
-                    {
-                        exprRes = eval(expr);
-                        table += `<td class="${exprRes}">`;
-                        table += exprRes ? 'T' : 'F';
-                        table += '</td>';
+                        for(var i = 0; i < keys.length; i++) 
+                        {
+                            eval(`var ${keys[i]} = ${vals[i]};`);
+                        }
+
+                        k = vars.length;
+                        l = 1;
+                        expressions.forEach((expr)=>
+                        {
+                            exprRes = eval(expr);
+                            table += `<td class="${exprRes}">`;
+                            table += exprRes ? 'T' : 'F';
+                            table += '</td>';
+                        });
+                        
+                        table += '</tr>';
                     });
-                    
-                    table += '</tr>';
-                });
-                
+                }
+                catch(err)
+                {
+                    document.write(err);
+                }
+
+                document.write(ttArr);
                 table += '</table>';
                 document.getElementById('result').innerHTML = table;
             }
